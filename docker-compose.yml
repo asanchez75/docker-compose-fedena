@@ -1,23 +1,35 @@
-version: '3'
+version: '2'
 services:
     web:
         build: .
-        # image: asanchez75/php-sqlsrv:d8
         # volumes:
         #     - "./html/:/var/www/html"
-        # ports:
-        #     - "80:80"
-        # restart: always
-        # #command: bash -c '/sbin/httpd -k start'
-        # depends_on:
-        #     - mysql
-    # mysql:
-    #     image: mysql:5.6
-    #     restart: always
-    #     environment:
-    #         MYSQL_ROOT_PASSWORD: 123456
-    #     volumes:
-    #         - "./mysql/mysql-data:/var/lib/mysql"
-    #         - "./mysql/backup:/backup"
-    #     ports:
-    #         - "3309:3306"
+        ports:
+            - "3001:3000"
+        restart: always
+        #command: bash -c '/sbin/httpd -k start'
+        networks:
+          vpcbr:
+            ipv4_address: 11.11.0.3
+    database:
+        image: mysql:5.6
+        restart: always
+#        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+        environment:
+            MYSQL_ROOT_PASSWORD: foradian
+#            MYSQL_DATABASE: fedena_ultimate
+        volumes:
+            - "./mysql/data:/var/lib/mysql"
+            - "./mysql/backup:/backup"
+        ports:
+            - "3307:3306"
+        networks:
+          vpcbr:
+            ipv4_address: 11.11.0.2
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 11.11.0.0/16
+         gateway: 11.11.0.1
