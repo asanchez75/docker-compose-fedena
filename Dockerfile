@@ -4,9 +4,9 @@ RUN sudo apt-get update && sudo apt-get install -y irb libopenssl-ruby libreadli
 RUN wget -O /usr/local/src/fedena-v2.3-bundler-linux.zip http://projectfedena.org/download/fedena-bundle-linux && \
     sudo unzip /usr/local/src/fedena-v2.3-bundler-linux.zip -d /usr/local/src/
 RUN cd /usr/local/src && \
-    wget http://production.cf.rubygems.org/rubygems/rubygems-1.3.7.tgz && \
-    tar xzvf rubygems-1.3.7.tgz && \
-    cd rubygems-1.3.7 && \
+    wget http://production.cf.rubygems.org/rubygems/rubygems-2.1.0.tgz && \
+    tar xzvf rubygems-2.1.0.tgz && \
+    cd rubygems-2.1.0 && \
     sudo ruby setup.rb && \
     sudo update-alternatives --install /usr/bin/gem gem /usr/bin/gem1.8 1 && \
     sudo gem install mysql && \
