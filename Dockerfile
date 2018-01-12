@@ -7,8 +7,6 @@ RUN ls -l /usr/lib/ruby/
 RUN wget -O /usr/local/src/fedena-v2.3-bundle-linux.zip http://projectfedena.org/download/fedena-bundle-linux && \
     unzip /usr/local/src/fedena-v2.3-bundle-linux.zip -d /usr/local/src/
 
-COPY Rakefile /usr/local/src/fedena-v2.3-bundle-linux/Rakefile
-
 COPY database.yml /usr/local/src/fedena-v2.3-bundle-linux/config/database.yml
 
 RUN cd /usr/local/src && \
@@ -34,13 +32,15 @@ RUN gem install bundler && \
     gem install session -v '3.1.0' && \
     gem install rush -v '0.6.8'
 
+COPY init.sh /init.sh
+RUN chmod u+x /init.sh
 RUN cd /usr/local/src/fedena-v2.3-bundle-linux && \
     bundle install --local
+
+RUN mkdir /data && cp -a /usr/local/src/fedena-v2.3-bundle-linux /data/fedena
 
 WORKDIR  /usr/local/src/fedena-v2.3-bundle-linux/
 
 EXPOSE 3000
 
-#RUN rake db:create &&  rake fedena:plugins:install_all && script/server
-
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "/init.sh"]
