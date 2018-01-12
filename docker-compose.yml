@@ -23,7 +23,7 @@ services:
             - "3001:3000"
         restart: always
         tty: true
-        #command: bash -c '/sbin/httpd -k start'
+        command: bash -c 'rake db:create &&  rake fedena:plugins:install_all && script/server'
         networks:
           vpcbr:
             ipv4_address: 11.11.0.3

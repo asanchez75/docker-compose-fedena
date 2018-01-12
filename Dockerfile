@@ -41,7 +41,6 @@ WORKDIR  /usr/local/src/fedena-v2.3-bundle-linux/
 
 EXPOSE 3000
 
-RUN rake db:create && \
-   rake fedena:plugins:install_all && script/server
+#RUN rake db:create &&  rake fedena:plugins:install_all && script/server
 
 CMD ["/bin/bash"]
